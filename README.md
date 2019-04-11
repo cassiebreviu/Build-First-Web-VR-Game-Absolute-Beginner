@@ -1,7 +1,7 @@
 # Build your First Web VR Game for the Absolute Beginner
 This is source and tutorial for building your first website and first web vr game - all in one!
 
-### Download VS Code and create index.html file
+### Download VS Code, create index.html and index.js files
 1. First things first. We need the right tools for the right job. (Download VsCode)[] if you dont already have it.
 2. Open VS code and create a new file called index.html
 3. Copy and paste this html and css into the file
