@@ -26,16 +26,72 @@ This is source and tutorial for building your first website and first web vr gam
                 touch-action: none;
             }
         </style>
+        
+        <!-- Babylon.js -->
+        <script src="https://code.jquery.com/pep/0.4.2/pep.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+        <script src="https://preview.babylonjs.com/ammo.js"></script>
+        <script src="https://preview.babylonjs.com/cannon.js"></script>
+        <script src="https://preview.babylonjs.com/Oimo.js"></script>
+        <script src="https://preview.babylonjs.com/gltf_validator.js"></script>
+        <script src="https://preview.babylonjs.com/earcut.min.js"></script>
+        <script src="https://preview.babylonjs.com/babylon.js"></script>
+        <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+        <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+        <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+        <script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+        <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+        <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+        <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
     </head>
 
     <body>
         <canvas id="renderCanvas"></canvas>
-        <script src="dist/index.js"></script>
+        <script src="index.js"></script>
     </body>
 
 </html>
 ```
 4. Now create the index.js file and copy and paste this code into it.
+```javascript
+var canvas = document.getElementById("renderCanvas");
+var engine = new BABYLON.Engine(canvas, true);
+
+function createScene() {
+    // Create scene
+    var scene = new BABYLON.Scene(engine);
+
+
+    // Add Camera
+    var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, 0), scene);
+    // Targets the camera to a particular position. In this case the scene origin
+    camera.setTarget(BABYLON.Vector3.Zero());
+    // Attach the camera to the canvas
+    camera.attachControl(canvas, true);
+
+    // Add Light
+    var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(1, 1, 0), scene);
+
+    // Create sphere and add label
+    var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 5 }, scene);
+    sphere.position.y = -5;
+    sphere.position.x = -20;
+    sphere.position.z = -5;
+    sphere.material = new BABYLON.StandardMaterial("sphere material", scene)
+
+    // Enable VR
+    var vrHelper = scene.createDefaultVRExperience();
+    vrHelper.enableInteractions();
+
+    return scene;
+}
+
+var scene = createScene();
+
+engine.runRenderLoop(() => {
+    scene.render();
+});
+```
 5. Save file and navigate to the file explorer. Double click the index.html (browswer will open ooo ahhh I made a site)
 
 
