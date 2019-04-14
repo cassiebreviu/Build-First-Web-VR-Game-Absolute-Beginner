@@ -161,3 +161,19 @@ var addSpheres = function (scene, amount) {
 ```javascript
 addSpheres(scene, 10);
 ```
+## Lets add a button to trigger the spheres falling from the sky
+1. Create button
+2. Add event to button
+3. call add spheres from button event
+
+## Make the spheres disappear on click (shoot) event
+1. Add event to spheres so they disappear when shot
+2. Remove physics from ground so spheres fall through instead of piling up
+
+## Add label to keep score
+
+## Play with gravity vector to find a good speed for the spheres to fall
+
+## Play with colors and textures
+
+## How to host a static site on azure
