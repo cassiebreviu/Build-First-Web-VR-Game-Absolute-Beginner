@@ -132,3 +132,10 @@ sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpo
 ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0.7 }, scene);
 ```
 5. Save the changes and refresh the browser. You should now see the sphere fall from the sky and bounce on the ground.
+NOTE: If you are having any issues check out this commit to the repo. Its what your files should look like after this step:
+[Link to commit](https://github.com/cassieview/Build-First-Web-VR-Game-Absolute-Beginner/commit/49ede511f3f1eb33ecb9a3801bf2b4df8851434c)
+
+## This is kinda cool. We now have one sphere falling from the sky and bouncing onto the ground. But wouldnt it be way cooler if you had lets say 10 spheres falling? Lets do that next!
+
+1. Add loop function
+2. call loop function from create scene function
