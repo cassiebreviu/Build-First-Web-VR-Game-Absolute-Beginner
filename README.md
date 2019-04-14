@@ -137,5 +137,27 @@ NOTE: If you are having any issues check out this commit to the repo. Its what y
 
 ## This is kinda cool. We now have one sphere falling from the sky and bouncing onto the ground. But wouldnt it be way cooler if you had lets say 10 spheres falling? Lets do that next!
 
-1. Add loop function
-2. call loop function from create scene function
+1. Add `addSpheres` function on `line 56` below our `createScene` function
+```javascript
+var addSpheres = function (scene, amount) {
+    for (let index = 0; index < amount; index++) {
+        var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+        sphere.position = new BABYLON.Vector3(Math.random() * 20 - 10, 10, Math.random() * 10 - 5);
+        sphere.material = new BABYLON.StandardMaterial("sphere material", scene)
+        sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
+    }
+ }
+```
+2. Delete or comment out the code that was creating the sphere in the `createScene` function on `lines 27-32`.
+```javascript
+    var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 5 }, scene);
+    sphere.position.y = 10;
+    sphere.position.x = -10;
+    sphere.position.z = -10;
+    sphere.material = new BABYLON.StandardMaterial("sphere material", scene);
+    sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
+```
+3. Add a call to the `addSpheres` function we just created. This goes on `line 27`. This is calling the function we created, passing in the scene we want to add the spheres to and defining how many spheres we want.
+```javascript
+addSpheres(scene, 10);
+```
