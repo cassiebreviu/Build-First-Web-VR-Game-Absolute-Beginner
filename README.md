@@ -109,6 +109,26 @@ engine.runRenderLoop(() => {
 
 ## Now lets add gravlity to our site
 1. To add gravity to our game we need to add the physics engine. The physics engine we will use is Cannonjs and we already imported the library with our script tags.
-2. We need to add grabity to the camera
-3. we need to add a physics imposter to the sphere object
-4. next add the ground
+```
+ <script src="https://preview.babylonjs.com/cannon.js"></script>
+```
+2. Add gravity to the camera by pasting this code below `camera.attachControl(canvas, true);` on `line 16`
+```javascript
+    // Apply Gravity to Camera
+    camera.applyGravity = true;
+```
+3. Enable physics and set the gravitational force with a vector on `line 22`
+```javascript
+    // Enable Physics and set gravtiy force with a vector
+    var gravityVector = new BABYLON.Vector3(0, -10, 0);
+    scene.enablePhysics(gravityVector, new BABYLON.CannonJSPlugin());
+```
+3. Add a `physicsImposter` to the `sphere` on `line 32`
+```javascript
+sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.9 }, scene);
+```
+4. Add a `physicsImposter` to the `ground` on `line 46`
+```javascript
+ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0.7 }, scene);
+```
+5. Save the changes and refresh the browser. You should now see the sphere fall from the sky and bounce on the ground.
