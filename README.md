@@ -161,6 +161,7 @@ var addSpheres = function (scene, amount) {
 ```javascript
 addSpheres(scene, 10);
 ```
+
 ## Lets add a button to trigger the spheres falling from the sky
 1. Create button
 2. Add event to button
