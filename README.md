@@ -163,18 +163,49 @@ addSpheres(scene, 10);
 ```
 
 ## Lets add a button to trigger the spheres falling from the sky
-1. Create button
-2. Add event to button
-3. call add spheres from button event
+1. Copy and paste the below script on `line 43` below the `ground.physicsImpostor` variable. 
+2. This block of code is doing multiple things:
+    a. Creating a button and the button attributes. 
+    b. Creating a full screen canvas texture to add our button to. 
+    c. Then we moved the `addSpheres` method inside of the button event that fires on click. This will add the spheres and remove the          button visibility to make the game start.
+
+```javascript
+// GUI
+     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+     var button = BABYLON.GUI.Button.CreateSimpleButton("button", "Start Game");
+     button.width = 0.2;
+     button.height = "40px";
+     button.color = "white";
+     button.background = "blue";
+     button.onPointerUpObservable.add(function () {
+        addSpheres(scene,10);
+        button.isVisible = false;
+    });
+    advancedTexture.addControl(button);  
+```
 
 ## Make the spheres disappear on click (shoot) event
 1. Add event to spheres so they disappear when shot
 2. Remove physics from ground so spheres fall through instead of piling up
 
+## How to host a static site on azure
+
+# Congrats! You built a game!
+Now you have the basic workings of a game and the source for what you created is here in this repo. You can pick up right where you left off on any computer and continue to build out your game and add features. 
+
+## Here are ideas and code snippets for how you could continue to expand on the game.
+
 ## Add label to keep score
-
-## Play with gravity vector to find a good speed for the spheres to fall
-
+```javascript
+    var scoreText = new BABYLON.GUI.TextBlock();
+    scoreText.text = "Score: " + currentScore.toString();
+    scoreText.color = "white";
+    scoreText.fontSize = 24;
+    advancedTexture.addControl(scoreText);
+```
 ## Play with colors and textures
 
-## How to host a static site on azure
+Live example can be found at https://cloudvr.games
+
+
