@@ -164,10 +164,10 @@ addSpheres(scene, 10);
 
 ## Lets add a button to trigger the spheres falling from the sky
 1. Copy and paste the below script on `line 43` below the `ground.physicsImpostor` variable. 
-2. This block of code is doing multiple things:
-    a. Creating a button and the button attributes. 
-    b. Creating a full screen canvas texture to add our button to. 
-    c. Then we moved the `addSpheres` method inside of the button event that fires on click. This will add the spheres and remove the          button visibility to make the game start.
+2. This block of code is doing multiple things:<br/>
+    a. Creating a button and the button attributes. <br/>
+    b. Creating a full screen canvas texture to add our button to. <br/>
+    c. Then we moved the `addSpheres` method inside of the button event that fires on click. This will add the spheres and remove the          button visibility to make the game start.<br/>
 
 ```javascript
 // GUI
