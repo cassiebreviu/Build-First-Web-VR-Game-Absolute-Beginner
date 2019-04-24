@@ -132,3 +132,80 @@ sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpo
 ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0.7 }, scene);
 ```
 5. Save the changes and refresh the browser. You should now see the sphere fall from the sky and bounce on the ground.
+NOTE: If you are having any issues check out this commit to the repo. Its what your files should look like after this step:
+[Link to commit](https://github.com/cassieview/Build-First-Web-VR-Game-Absolute-Beginner/commit/49ede511f3f1eb33ecb9a3801bf2b4df8851434c)
+
+## This is kinda cool. We now have one sphere falling from the sky and bouncing onto the ground. But wouldnt it be way cooler if you had lets say 10 spheres falling? Lets do that next!
+
+1. Add `addSpheres` function on `line 56` below our `createScene` function
+```javascript
+var addSpheres = function (scene, amount) {
+    for (let index = 0; index < amount; index++) {
+        var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+        sphere.position = new BABYLON.Vector3(Math.random() * 20 - 10, 10, Math.random() * 10 - 5);
+        sphere.material = new BABYLON.StandardMaterial("sphere material", scene)
+        sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
+    }
+ }
+```
+2. Delete or comment out the code that was creating the sphere in the `createScene` function on `lines 27-32`.
+```javascript
+    var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 5 }, scene);
+    sphere.position.y = 10;
+    sphere.position.x = -10;
+    sphere.position.z = -10;
+    sphere.material = new BABYLON.StandardMaterial("sphere material", scene);
+    sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
+```
+3. Add a call to the `addSpheres` function we just created. This goes on `line 27`. This is calling the function we created, passing in the scene we want to add the spheres to and defining how many spheres we want.
+```javascript
+addSpheres(scene, 10);
+```
+
+## Lets add a button to trigger the spheres falling from the sky
+1. Copy and paste the below script on `line 43` below the `ground.physicsImpostor` variable. 
+2. This block of code is doing multiple things:
+    a. Creating a button and the button attributes. 
+    b. Creating a full screen canvas texture to add our button to. 
+    c. Then we moved the `addSpheres` method inside of the button event that fires on click. This will add the spheres and remove the          button visibility to make the game start.
+
+```javascript
+// GUI
+     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+     var button = BABYLON.GUI.Button.CreateSimpleButton("button", "Start Game");
+     button.width = 0.2;
+     button.height = "40px";
+     button.color = "white";
+     button.background = "blue";
+     button.onPointerUpObservable.add(function () {
+        addSpheres(scene,10);
+        button.isVisible = false;
+    });
+    advancedTexture.addControl(button);  
+```
+
+## Make the spheres disappear on click (shoot) event
+1. Add event to spheres so they disappear when shot
+2. Remove physics from ground so spheres fall through instead of piling up
+
+## How to host a static site on azure
+
+# Congrats! You built a game!
+Now you have the basic workings of a game and the source for what you created is here in this repo. You can pick up right where you left off on any computer and continue to build out your game and add features. 
+
+## Here are ideas and code snippets for how you could continue to expand on the game.
+
+## Add label to keep score
+```javascript
+    var scoreText = new BABYLON.GUI.TextBlock();
+    scoreText.text = "Score: " + currentScore.toString();
+    scoreText.color = "white";
+    scoreText.fontSize = 24;
+    advancedTexture.addControl(scoreText);
+```
+## Play with colors and textures
+
+Live example can be found at https://cloudvr.games
+
+
