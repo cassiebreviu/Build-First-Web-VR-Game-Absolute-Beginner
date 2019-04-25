@@ -62,7 +62,7 @@ function createScene() {
     var scene = new BABYLON.Scene(engine);
 
     // Add Camera
-    var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, 0), scene);
+    var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -10), scene);
     // Targets the camera to a particular position. In this case the scene origin
     camera.setTarget(BABYLON.Vector3.Zero());
     // Attach the camera to the canvas
@@ -120,7 +120,7 @@ engine.runRenderLoop(() => {
 3. Enable physics and set the gravitational force with a vector on `line 22`
 ```javascript
     // Enable Physics and set gravtiy force with a vector
-    var gravityVector = new BABYLON.Vector3(0, -10, 0);
+    var gravityVector = new BABYLON.Vector3(0, -1, 0);
     scene.enablePhysics(gravityVector, new BABYLON.CannonJSPlugin());
 ```
 3. Add a `physicsImposter` to the `sphere` on `line 32`
@@ -141,9 +141,9 @@ NOTE: If you are having any issues check out this commit to the repo. Its what y
 ```javascript
 var addSpheres = function (scene, amount) {
     for (let index = 0; index < amount; index++) {
-        var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+        let sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
         sphere.position = new BABYLON.Vector3(Math.random() * 20 - 10, 10, Math.random() * 10 - 5);
-        sphere.material = new BABYLON.StandardMaterial("sphere material", scene)
+        sphere.material = new BABYLON.StandardMaterial("sphere material", scene);
         sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
     }
  }
@@ -164,13 +164,13 @@ addSpheres(scene, 10);
 
 ## Lets add a button to trigger the spheres falling from the sky
 1. Copy and paste the below script on `line 43` below the `ground.physicsImpostor` variable. 
-2. This block of code is doing multiple things:
-    a. Creating a button and the button attributes. 
-    b. Creating a full screen canvas texture to add our button to. 
-    c. Then we moved the `addSpheres` method inside of the button event that fires on click. This will add the spheres and remove the          button visibility to make the game start.
+2. This block of code is doing multiple things:<br/>
+    a. Creating a button and the button attributes. <br/>
+    b. Creating a full screen canvas texture to add our button to. <br/>
+    c. Then we moved the `addSpheres` method inside of the button event that fires on click. This will add the spheres and remove the          button visibility to make the game start.<br/>
 
 ```javascript
-// GUI
+     // GUI
      var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
      var button = BABYLON.GUI.Button.CreateSimpleButton("button", "Start Game");
@@ -186,10 +186,28 @@ addSpheres(scene, 10);
 ```
 
 ## Make the spheres disappear on click (shoot) event
-1. Add event to spheres so they disappear when shot
-2. Remove physics from ground so spheres fall through instead of piling up
+1. Add event with the `actionManager` to spheres so they disappear when shot. Copy and paste below on `line 70`
+```javascript
+      //add click event to sphere
+      sphere.actionManager = new BABYLON.ActionManager(scene);
+      sphere.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, function () {
+            scene.removeMesh(sphere);
+            score++;
+            console.log("score: " + score);
+      }));
+```
+2. We added score in the event so lets define the variable on `line 63`.
+```javascript
+    var score = 0;
+```
+3. Now we have spheres falling and we can click on them to disappear.  The problem here is that if the spheres just sit on the ground the player can keep shooting them. Lets remove the `ground.physicsImpostor` so spheres fall through instead of piling up. We can do this by commenting on the below code on `line 39`
+```javascript
+    //ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5,               restitution: 0.7 }, scene);
+```
 
 ## How to host a static site on azure
+1. Go to https://portal.azure.com
+2. create resource
 
 # Congrats! You built a game!
 Now you have the basic workings of a game and the source for what you created is here in this repo. You can pick up right where you left off on any computer and continue to build out your game and add features. 
@@ -204,7 +222,15 @@ Now you have the basic workings of a game and the source for what you created is
     scoreText.fontSize = 24;
     advancedTexture.addControl(scoreText);
 ```
-## Play with colors and textures
+## Play with colors
+1. One way to change the colors of meshes (spheres and ground) is to add light effects to the scenes light varible. Use Color3 which takes Red, Green, Blue (RGB) numbers to create a color. Add the below block of code on `line 20` and see how it changes the colors in your scene!
+```javascript
+   //Diffuse - the basic color or texture of the material as viewed under a light;
+    light.diffuse = new BABYLON.Color3(1, 0, 0);
+    //Specular - the highlight given to the material by a light;
+	light.specular = new BABYLON.Color3(0, 1, 0);
+	light.groundColor = new BABYLON.Color3(0, 1, 0);
+```
 
 Live example can be found at https://cloudvr.games
 
