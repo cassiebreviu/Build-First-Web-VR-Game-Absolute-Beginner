@@ -267,7 +267,7 @@ var gravityVector = new BABYLON.Vector3(0, -10, 0);
 Docs to add sound: https://doc.babylonjs.com/how_to/playing_sounds_and_music
 
 ## Helpful Links
-BabylonJS playground https://www.babylonjs-playground.com/
+BabylonJS playground https://www.babylonjs-playground.com/ <br/>
 Live example can be found at https://cloudvr.games
 
 
