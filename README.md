@@ -204,6 +204,12 @@ addSpheres(scene, 10);
 ```javascript
     //ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5,               restitution: 0.7 }, scene);
 ```
+4. Uncomment the enable VR block so that we can run our game in VR.
+```javascript
+    var vrHelper = scene.createDefaultVRExperience();
+    vrHelper.enableInteractions();
+```
+
 # Congrats! You built a game!
 Now you have the basic workings of a game and the source for what you created is here in this repo. You can pick up right where you left off on any computer and continue to build out your game and add features. 
 
