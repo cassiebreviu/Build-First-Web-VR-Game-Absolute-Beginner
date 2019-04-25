@@ -214,7 +214,7 @@ Now you have the basic workings of a game and the source for what you created is
 
 ## Here are ideas and code snippets for how you could continue to expand on the game.
 
-## Add label to keep score
+### Add label to keep score
 ```javascript
     var scoreText = new BABYLON.GUI.TextBlock();
     scoreText.text = "Score: " + currentScore.toString();
@@ -222,7 +222,7 @@ Now you have the basic workings of a game and the source for what you created is
     scoreText.fontSize = 24;
     advancedTexture.addControl(scoreText);
 ```
-## Play with colors
+### Play with colors
 1. One way to change the colors of meshes (spheres and ground) is to add light effects to the scenes light varible. Use Color3 which takes Red, Green, Blue (RGB) numbers to create a color. Add the below block of code on `line 20` and see how it changes the colors in your scene!
 ```javascript
    //Diffuse - the basic color or texture of the material as viewed under a light;
@@ -231,7 +231,16 @@ Now you have the basic workings of a game and the source for what you created is
 	light.specular = new BABYLON.Color3(0, 1, 0);
 	light.groundColor = new BABYLON.Color3(0, 1, 0);
 ```
+### Play with gravity to make the spheres fall faster or slower
+```javascript
+var gravityVector = new BABYLON.Vector3(0, -10, 0);
+```
 
+### Add Sound when sphere disappears
+Docs to add sound: https://doc.babylonjs.com/how_to/playing_sounds_and_music
+
+## Helpful Links
+BabylonJS playground https://www.babylonjs-playground.com/
 Live example can be found at https://cloudvr.games
 
 
