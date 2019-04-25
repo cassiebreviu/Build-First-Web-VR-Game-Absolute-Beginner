@@ -62,7 +62,7 @@ function createScene() {
     var scene = new BABYLON.Scene(engine);
 
     // Add Camera
-    var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, 0), scene);
+    var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -10), scene);
     // Targets the camera to a particular position. In this case the scene origin
     camera.setTarget(BABYLON.Vector3.Zero());
     // Attach the camera to the canvas
@@ -120,7 +120,7 @@ engine.runRenderLoop(() => {
 3. Enable physics and set the gravitational force with a vector on `line 22`
 ```javascript
     // Enable Physics and set gravtiy force with a vector
-    var gravityVector = new BABYLON.Vector3(0, -10, 0);
+    var gravityVector = new BABYLON.Vector3(0, -1, 0);
     scene.enablePhysics(gravityVector, new BABYLON.CannonJSPlugin());
 ```
 3. Add a `physicsImposter` to the `sphere` on `line 32`
@@ -206,6 +206,8 @@ addSpheres(scene, 10);
 ```
 
 ## How to host a static site on azure
+1. Go to https://portal.azure.com
+2. create resource
 
 # Congrats! You built a game!
 Now you have the basic workings of a game and the source for what you created is here in this repo. You can pick up right where you left off on any computer and continue to build out your game and add features. 
@@ -220,7 +222,15 @@ Now you have the basic workings of a game and the source for what you created is
     scoreText.fontSize = 24;
     advancedTexture.addControl(scoreText);
 ```
-## Play with colors and textures
+## Play with colors
+1. One way to change the colors of meshes (spheres and ground) is to add light effects to the scenes light varible. Use Color3 which takes Red, Green, Blue (RGB) numbers to create a color. Add the below block of code on `line 20` and see how it changes the colors in your scene!
+```javascript
+   //Diffuse - the basic color or texture of the material as viewed under a light;
+    light.diffuse = new BABYLON.Color3(1, 0, 0);
+    //Specular - the highlight given to the material by a light;
+	light.specular = new BABYLON.Color3(0, 1, 0);
+	light.groundColor = new BABYLON.Color3(0, 1, 0);
+```
 
 Live example can be found at https://cloudvr.games
 
