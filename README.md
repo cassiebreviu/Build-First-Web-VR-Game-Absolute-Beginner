@@ -141,9 +141,9 @@ NOTE: If you are having any issues check out this commit to the repo. Its what y
 ```javascript
 var addSpheres = function (scene, amount) {
     for (let index = 0; index < amount; index++) {
-        var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+        let sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
         sphere.position = new BABYLON.Vector3(Math.random() * 20 - 10, 10, Math.random() * 10 - 5);
-        sphere.material = new BABYLON.StandardMaterial("sphere material", scene)
+        sphere.material = new BABYLON.StandardMaterial("sphere material", scene);
         sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
     }
  }
@@ -170,7 +170,7 @@ addSpheres(scene, 10);
     c. Then we moved the `addSpheres` method inside of the button event that fires on click. This will add the spheres and remove the          button visibility to make the game start.<br/>
 
 ```javascript
-// GUI
+     // GUI
      var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
      var button = BABYLON.GUI.Button.CreateSimpleButton("button", "Start Game");
@@ -186,8 +186,24 @@ addSpheres(scene, 10);
 ```
 
 ## Make the spheres disappear on click (shoot) event
-1. Add event to spheres so they disappear when shot
-2. Remove physics from ground so spheres fall through instead of piling up
+1. Add event with the `actionManager` to spheres so they disappear when shot. Copy and paste below on `line 70`
+```javascript
+      //add click event to sphere
+      sphere.actionManager = new BABYLON.ActionManager(scene);
+      sphere.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, function () {
+            scene.removeMesh(sphere);
+            score++;
+            console.log("score: " + score);
+      }));
+```
+2. We added score in the event so lets define the variable on `line 63`.
+```javascript
+    var score = 0;
+```
+3. Now we have spheres falling and we can click on them to disappear.  The problem here is that if the spheres just sit on the ground the player can keep shooting them. Lets remove the `ground.physicsImpostor` so spheres fall through instead of piling up. We can do this by commenting on the below code on `line 39`
+```javascript
+    //ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5,               restitution: 0.7 }, scene);
+```
 
 ## How to host a static site on azure
 
