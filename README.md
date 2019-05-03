@@ -1,10 +1,9 @@
 # Build your First Web VR Game for the Absolute Beginner
 This is source and tutorial for building your first website and first web vr game - all in one!
 
-### Download VS Code, create index.html and index.js files
-1. First things first. We need the right tools for the right job. (Download VsCode)[] if you dont already have it.
-2. Open VS code and create a new file called index.html
-3. Copy and paste this html and css into the file. 
+### Create index.html and index.js files
+1. Open VS code and create a new file called index.html
+2. Copy and paste this html and css into the file. 
 ```html <!DOCTYPE html>
 <html>
 
@@ -52,7 +51,7 @@ This is source and tutorial for building your first website and first web vr gam
 
 </html>
 ```
-4. Now create the index.js file and copy and paste this code into it.
+3. Now create the index.js file and copy and paste this code into it.
 ```javascript
 var canvas = document.getElementById("renderCanvas");
 var engine = new BABYLON.Engine(canvas, true);
@@ -105,7 +104,7 @@ engine.runRenderLoop(() => {
     scene.render();
 });
 ```
-5. Save file and navigate to the file explorer. Double click the index.html (browswer will open ooo ahhh I made a site)
+4. Save file and navigate to the file explorer. Double click the index.html (browswer will open ooo ahhh I made a site)
 
 ## Now lets add gravlity to our site
 1. To add gravity to our game we need to add the physics engine. The physics engine we will use is Cannonjs and we already imported the library with our script tags.
