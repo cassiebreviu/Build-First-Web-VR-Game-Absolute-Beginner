@@ -195,7 +195,7 @@ Pretty cool right?  If you look through the code inside the 'fadeSphere' functio
 ## Let's add a button into the scene that resets the game when it's clicked
 1. Let's copy the following snippet underneath our sphere code.
 ```javascript
-	// Create a button to restart the game
+    // Create a button to restart the game
     var plane = BABYLON.Mesh.CreatePlane("plane", 40);
     plane.position.set(0, 2, 10);
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane);
@@ -223,9 +223,26 @@ function resetGame(){
     sphere.physicsImpostor.setLinearVelocity(new BABYLON.Vector3());
 };
 ```
-Now when the button is reset, we put the scale, position, and visibility of the sphere back to where we started.
+When the button is pressed and the 'resetGame' function is called, we put the scale, position, and visibility of the sphere back to where we started.
 
 
+## Next thing we should add is the ability to keep score in our game.
+1. We're going to start by creating a variable to hold our score count.  Copy the following snippet underneath our camera and lighting code.
+```javascript
+    // Creat a variable to hold our score.
+    var score = 0;
+```
+
+2. Ok let's make sure our score is updated whenever our sphere is clicked.  Copy the following snippet and paste it into the 'fadeSphere' function as the first thing that happens when that function is called.
+```javascript
+    score++;
+    button.textBlock.text = "Reset Game (Score: "+score+")";
+```
+
+3. Next let's make sure we reset the score when the reset button is pressed.  Copy and paste this snippet as the first thing that happens inside of the resetGame function.
+```javascript
+    score = 0;
+```
 
 
 3. Enable physics and set the gravitational force with a vector on `line 22`
