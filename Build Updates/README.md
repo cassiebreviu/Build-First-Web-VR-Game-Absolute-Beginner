@@ -390,6 +390,10 @@ and then we're going to add an 'else' statement just in front of the next 'if.' 
     clickedSpheres = [];
 ```
 
+Run it and try it out!  Sweet!!  Nice job!  Hit save in the playground to save your work.  
+
 ## Congratulations!  You made a VR game entirely on the web!  And it wasn't that tricky either was it?  Be sure to keep playing and trying new things.  Here's a fantstic resource where you can dive in deeper into learning more about Babylon.js 
 
 [doc.babylonjs.com](https://doc.babylonjs.com/)
+
+One last fun thing to show you.  If you've saved your scene, you can go to settings in the playground and look for QR Code Link.  Grab your phone and get your camera out to scan this code...now you can take your VR game with you!
