@@ -324,66 +324,15 @@ Again, we're simply updating the code here to check and see if any of the sphere
 Ok let's run this!  We've got a solid little game going here don't we?!!
 
 ## There's one last thing that we need to tackle before we wrap up.  There's a bug in our game.  You can hit a sphere multiple times before it disappears, inflating your score.  That's not what we want...we want each sphere to be able to be hit just once.
-1. To fix this bug, we're going to get a little creative.  Let's start by adding a new array just under where we create our array of spheres.  Look for this in your code:
+1. Fixing this bug is pretty easy.  Once a sphere is clicked, we want to make sure it's no longer clickable.  So we'll start with the fadeSphere function, which contains all of our code for what happens once a sphere is clicked.  Find that fadeSphere function and add the following snippet:
 ```javascript
-    var spheres = [];
+    clickedSphere.isPickable = false;
 ```
 
+2. Then we need to make sure that once we reset the game, that all of the spheres are made clickable again.  We can do that by adding the following code to our resetGame function, inside of the for loop:
 Just underneath that let's add this:
 ```javascript
-    var clickedSpheres = [];
-```
-
-2. What we want to do, is keep a list of every sphere that's been clicked.  So once a sphere has been clicked we want to add it into this array.  We can do that in our fadeSphere function that's called whenever a sphere is clicked.  Add the following snippet into your fadeSphere function:
-```javascript
-    clickedSpheres.push(clickedSphere);
-```
-
-3. Next, locate the following in your code:
-```javascript
-    // When a sphere is clicked update the score
-    scene.onPointerObservable.add((e)=>{
-        if(e.type == BABYLON.PointerEventTypes.POINTERDOWN){
-            spheres.forEach((s)=>{
-                if(e.pickInfo.pickedMesh == s){
-                    fadeSphere(s);
-                }
-            });
-        }
-    });
-```
-Just after this line:
-```javascript
-    spheres.forEach((s)=>{
-```
-
-we're going to add this:
-```javascript
-    if(clickedSpheres.includes(s)){
-        return;
-    }
-```
-
-and then we're going to add an 'else' statement just in front of the next 'if.' So this section of code should now look like this:
-```javascript
-    // When a sphere is clicked update the score
-    scene.onPointerObservable.add((e)=>{
-        if(e.type == BABYLON.PointerEventTypes.POINTERDOWN){
-            spheres.forEach((s)=>{
-                if(clickedSpheres.includes(s)){
-                    return;
-                }
-                else if(e.pickInfo.pickedMesh == s){
-                    fadeSphere(s);
-                }
-            });
-        }
-    });
-```
-
-4. Last step! Next we want to make sure that we reset this new array if the reset button is pressed. Locate your 'resetGame' function and add this to it:
-```javascript
-    clickedSpheres = [];
+    clickedSphere.isPickable = true;
 ```
 
 Run it and try it out!  Sweet!!  Nice job!  Hit save in the playground to save your work.  
