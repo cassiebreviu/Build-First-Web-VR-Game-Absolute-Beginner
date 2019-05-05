@@ -172,7 +172,6 @@ What's happening here, is that any time a click occurs, we check to see if a mes
 ```javascript
 //add a function that scales and fades the sphere
 function fadeSphere(clickedSphere){
-    clickedSphere.isPickable = false;
     BABYLON.Animation.CreateAndStartAnimation("sphereScaleDown", clickedSphere, "scaling.x", 30, 10, 1, 0.5, 0);
     BABYLON.Animation.CreateAndStartAnimation("sphereScaleDown", clickedSphere, "scaling.y", 30, 10, 1, 0.5, 0);
     BABYLON.Animation.CreateAndStartAnimation("sphereScaleDown", clickedSphere, "scaling.z", 30, 10, 1, 0.5, 0);
@@ -217,7 +216,6 @@ function resetGame(){
     sphere.scaling.y = 1;
     sphere.scaling.z = 1;
     sphere.position.y = 2;
-    sphere.isPickable = true;
     sphere.physicsImpostor.setLinearVelocity(new BABYLON.Vector3());
 };
 ```
@@ -233,7 +231,7 @@ Click run to see our latest progress in action.
     var score = 0;
 ```
 
-2. Ok let's make sure our score is updated whenever our sphere is clicked.  Copy the following snippet and paste it into the 'fadeSphere' function as the second line after 'clickedSphere.isPickable = false'.
+2. Ok let's make sure our score is updated whenever our sphere is clicked.  Copy the following snippet and paste it into the 'fadeSphere' function as the first line in the function.
 ```javascript
     score++;
     button.textBlock.text = "Reset Game (Score: "+score+")";
@@ -280,7 +278,6 @@ This new code shows you how loops work.  We loop through a series of code that c
     sphere.scaling.y = 1;
     sphere.scaling.z = 1;
     sphere.position.y = 2;
-    sphere.isPickable = true;
     sphere.physicsImpostor.setLinearVelocity(new BABYLON.Vector3());
 ```
 
@@ -291,7 +288,6 @@ with this:
         spheres[index].scaling.x = 1;
         spheres[index].scaling.y = 1;
         spheres[index].scaling.z = 1;
-	spheres[index].isPickable = true;
         spheres[index].position = new BABYLON.Vector3(Math.random() * 20 - 10, 10, Math.random() * 10 - 5);
         spheres[index].physicsImpostor.setLinearVelocity(new BABYLON.Vector3());
     }
@@ -326,9 +322,26 @@ with this:
 Again, we're simply updating the code here to check and see if any of the spheres were underneath the cursor when a click occured.
 
 Ok let's run this!  We've got a solid little game going here don't we?!!
-Nice job!  Hit save in the playground to save your work.  
 
-## Congratulations!  You made a VR game entirely on the web!  And it wasn't that tricky either was it?  Be sure to keep playing and trying new things.  Here's a fantstic resource where you can dive in deeper into learning more about Babylon.js 
+## Fix that Bug!
+There's one last thing that we need to tackle before we wrap up.  There's a bug in our game!  You can hit a sphere multiple times before it disappears, inflating your score.  That's not what we want...we want each sphere to be able to be hit just once.
+
+1. Fixing this bug is pretty easy.  Once a sphere is clicked, we want to make sure it's no longer clickable.  So we'll start with the 'fadeSphere' function, which contains all of our code for what happens once a sphere is clicked.  Find that 'fadeSphere' function and add the following snippet:
+
+```javascript
+	clickedSphere.isPickable = false;
+```
+
+ 2. Then we need to make sure that once we reset the game, that all of the spheres are made clickable again. We can do that by adding the following code to our resetGame function, inside of the for loop let's add this:
+
+```javascript
+	spheres[index].isPickable = true;
+```
+
+Run it and try it out!  Sweet!!  Nice job!  Hit save in the playground to save your work. 
+
+## Congratulations!  
+You made a VR game entirely on the web!  And it wasn't that tricky either was it?  Be sure to keep playing and trying new things.  Here's a fantstic resource where you can dive in deeper into learning more about Babylon.js 
 
 [doc.babylonjs.com](https://doc.babylonjs.com/)
 
