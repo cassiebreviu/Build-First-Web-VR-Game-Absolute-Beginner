@@ -8,6 +8,8 @@ This is source and tutorial for building your first website and first web vr gam
 <html>
 
     <head>
+        <!--The HTML <style> tag is used for declaring style sheets within your HTML document. 
+            Each HTML document can contain multiple <style> tags.-->
         <style>
             html,
             body {
@@ -26,12 +28,19 @@ This is source and tutorial for building your first website and first web vr gam
             }
         </style>
         
-        <!-- Babylon.js -->
+        <!-- Import Babylon.js framwork-->
         <script src="https://preview.babylonjs.com/babylon.js"></script>
     </head>
 
     <body>
+        <!--The canvas element is part of HTML5 and allows for dynamic, 
+            scriptable rendering of 2D shapes and bitmap images. It is a low level, 
+            procedural model that updates a bitmap and does not have a built-in scene graph; 
+            however through WebGL allows 3D shapes and images and so-on.-->
         <canvas id="renderCanvas"></canvas>
+        <!--The <script> tag is used to define a client-side script (JavaScript). 
+            The <script> element either contains scripting statements, or it points to an 
+            external script file through the src attribute.-->
         <script src="index.js"></script>
     </body>
 
