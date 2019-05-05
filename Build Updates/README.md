@@ -133,17 +133,29 @@ var createScene = function () {
 };
 ```
 
-## Ok, to get started, let's move the sphere up a bit so that it doesn't intersect the ground.
+## Sweet, let's move the sphere up a bit so that it doesn't intersect the ground.
 1. We can directly control the position of any object in Babylon by adding or subtracting values to the x, y, or z coordnates.  Let's copy the following code snippet underneath the rest of our sphere code.
 ```javascript
     sphere.position.y = 2;
 ```
-Let's
-2. Add gravity to the camera by pasting this code below `camera.attachControl(canvas, true);` on `line 16`
+Once you've added that line, click the **Run** button to see the change you just made reflected instantly in the right window.
+
+Nice Work!!!
+
+## Let's make this scene a little more interesting by adding physics to the sphere!
+1. We need to start by first telling the scene that we want to enable physics.  We can do that by copying the following code into our scene.  To keep things tidy, let's copy this in towards the top, directly under where we create the basic Babylon Scene Object
 ```javascript
-    // Apply Gravity to Camera
-    camera.applyGravity = true;
+    // enable physics in the scene
+    scene.enablePhysics(new BABYLON.Vector3(0,-1,0), new BABYLON.AmmoJSPlugin());
 ```
+2. Now we need to tell Babylon that the sphere is a physics object and should be controlled by the physics engine that we just enabled.  We can do that by copying the following code snippet underneath the rest of our 'sphere' code.
+```javascript
+    sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.7 }, scene);
+```
+
+Ok let's try hitting run again and seeing what happens.
+
+
 3. Enable physics and set the gravitational force with a vector on `line 22`
 ```javascript
     // Enable Physics and set gravtiy force with a vector
