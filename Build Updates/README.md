@@ -300,8 +300,8 @@ This basically does the same things we did to reset our first sphere, but does i
 
 3. Ok last thing we have to update to get multiple spheres working in our game is to replace the following code:
 ```javascript
-	//add an event that fires when a click happens
-	scene.onPointerObservable.add((e)=>{
+    //add an event that fires when a click happens
+    scene.onPointerObservable.add((e)=>{
         if(e.type == BABYLON.PointerEventTypes.POINTERDOWN){
             if(e.pickInfo.pickedMesh == sphere){
                 fadeSphere(sphere);
