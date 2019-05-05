@@ -95,7 +95,7 @@ scene.render();
 4. Save file and navigate to the file explorer. Double click the index.html (browswer will open ooo ahhh I made a site)
 
 Here we're going to switch over from vscode and the browser, to using the Babylon playground, located at:
-[playground.babylonjs.com](https://www.playground.babylonjs.com)
+[playground.babylonjs.com](https://playground.babylonjs.com/)
 
 ## Ok, to get started, let's move the sphere up a bit so that it doesn't intersect the ground.
 1. We can directly control the position of any object in Babylon by adding or subtracting values to the x, y, or z coordnates.  Let's copy the following code snippet underneath the rest of our sphere code.
