@@ -169,7 +169,7 @@ Ok let's try hitting run again and seeing what happens.  Woohoo!  Pretty easy to
 ```
 What's happening here, is that any time a click occurs, we check to see if a mesh was under the cursor.  If there was a mesh, we check to see if it was our sphere, and if so, we call a function and pass in our sphere object.
 
-2. As you can probably guess, now we need to create that new function called 'fadeSphere().'  Let's copy the next snippet just below our newly added click event handler.
+2. As you can probably guess, now we need to create that new function called 'fadeSphere.'  Let's copy the next snippet just below our newly added click event handler.
 ```javascript
 //add a function that scales and fades the sphere
 function fadeSphere(clickedSphere){
@@ -180,6 +180,15 @@ function fadeSphere(clickedSphere){
 };
 ```
 Once you've copied that over, let's try running the scene again and this time, try clicking on the sphere.
+
+Pretty cool right?  If you look through the code inside the 'fadeSphere' function, what you'll see how easy it is to animate the properties of objects inside of Babylon.  The 5 numeric values that are passed into each animation are 
+- frames per second
+- the number of frames it should take to go from the starting value, to the ending value
+- starting value
+- ending value
+- loop mode (boolean)
+
+
 
 3. Enable physics and set the gravitational force with a vector on `line 22`
 ```javascript
