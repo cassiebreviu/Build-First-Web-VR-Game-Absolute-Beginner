@@ -94,8 +94,10 @@ scene.render();
 ```
 4. Save file and navigate to the file explorer. Double click the index.html (browswer will open ooo ahhh I made a site)
 
+
 Here we're going to switch over from vscode and the browser, to using the Babylon playground, located at:
 [playground.babylonjs.com](https://playground.babylonjs.com/)
+
 
 ## Ok, to get started, let's recreate what we just did in vscode, here in the playground.
 1. Select all of the code that you see in left window, and delete it!
@@ -155,6 +157,7 @@ Nice Work!!!
 
 Ok let's try hitting run again and seeing what happens.  Woohoo!  Pretty easy to apply physics to Babylon objects huh?
 
+
 ## Next up: we want the sphere to disappear when we click on it right?  Let's make that happen
 1. First let's create an event that fires whenever a click happens.  Copy this snippet underneath all of our sphere code.
 ```javascript
@@ -187,6 +190,41 @@ Pretty cool right?  If you look through the code inside the 'fadeSphere' functio
 - starting value
 - ending value
 - loop mode (boolean)
+
+
+## Let's add a button into the scene that resets the game when it's clicked
+1. Let's copy the following snippet underneath our sphere code.
+```javascript
+	// Create a button to restart the game
+    var plane = BABYLON.Mesh.CreatePlane("plane", 40);
+    plane.position.set(0, 2, 10);
+    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane);
+    var button = BABYLON.GUI.Button.CreateSimpleButton("button", "Start Game");
+    button.width = 0.25;
+    button.height = "40px";
+    button.color = "white";
+    button.background = "black";
+    button.onPointerUpObservable.add(function () {
+        resetGame();
+    });
+    advancedTexture.addControl(button);
+```
+Lots to dissect here, but at the highest level, what we're doing is creating a button with a label on it that says 'Start Game.' When that button is pressed we call a function called 'resetGame.'
+
+2. Now we're going to need that function.  Copy this snippet underneath our fadeSphere function.
+```javascript
+function resetGame(){
+    button.textBlock.text = "Reset Game";
+    sphere.visibility = 1;
+    sphere.scaling.x = 1;
+    sphere.scaling.y = 1;
+    sphere.scaling.z = 1;
+    sphere.position.y = 2;
+    sphere.physicsImpostor.setLinearVelocity(new BABYLON.Vector3());
+};
+```
+Now when the button is reset, we put the scale, position, and visibility of the sphere back to where we started.
+
 
 
 
