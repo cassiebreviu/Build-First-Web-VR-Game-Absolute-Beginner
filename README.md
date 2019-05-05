@@ -132,6 +132,7 @@ var createScene = function () {
 
 ## Sweet, let's move the sphere up a bit so that it doesn't intersect the ground.
 1. We can directly control the position of any object in Babylon by adding or subtracting values to the x, y, or z coordnates.  Let's copy the following code snippet underneath the rest of our sphere code.
+![x y z img](https://www.101computing.net/wp/wp-content/uploads/minecraft-xyz-coordinates.png)
 ```javascript
     sphere.position.y = 2;
 ```
