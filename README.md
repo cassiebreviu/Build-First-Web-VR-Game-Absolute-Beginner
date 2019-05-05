@@ -245,7 +245,7 @@ Click run to see our latest progress in action.
 Ok let's run this! Not bad!  We've got the makings of a game here.  Although...it's a pretty boring game.
 
 
-## Let's make this game a little more intersting by adding in more spheres!
+## Let's make this game a little more interesting by adding in more spheres!
 1. To start with, we're going to replace all of our current sphere creation code.  Find this code:
 ```javascript
     //Create a sphere for the scene
