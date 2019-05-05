@@ -313,7 +313,7 @@ This basically does the same things we did to reset our first sphere, but does i
 with this:
 ```javascript
     // When a sphere is clicked update the score
-	scene.onPointerObservable.add((e)=>{
+    scene.onPointerObservable.add((e)=>{
         if(e.type == BABYLON.PointerEventTypes.POINTERDOWN){
             spheres.forEach((s)=>{
                 if(e.pickInfo.pickedMesh == s){
