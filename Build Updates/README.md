@@ -153,8 +153,33 @@ Nice Work!!!
     sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.7 }, scene);
 ```
 
-Ok let's try hitting run again and seeing what happens.
+Ok let's try hitting run again and seeing what happens.  Woohoo!  Pretty easy to apply physics to Babylon objects huh?
 
+## Next up: we want the sphere to disappear when we click on it right?  Let's make that happen
+1. First let's create an event that fires whenever a click happens.  Copy this snippet underneath all of our sphere code.
+```javascript
+    //add an event that fires when a click happens
+	scene.onPointerObservable.add((e)=>{
+        if(e.type == BABYLON.PointerEventTypes.POINTERDOWN){
+            if(e.pickInfo.pickedMesh == sphere){
+                fadeSphere(sphere);
+            }
+        }
+    });
+```
+What's happening here, is that any time a click occurs, we check to see if a mesh was under the cursor.  If there was a mesh, we check to see if it was our sphere, and if so, we call a function and pass in our sphere object.
+
+2. As you can probably guess, now we need to create that new function called 'fadeSphere().'  Let's copy the next snippet just below our newly added click event handler.
+```javascript
+//add a function that scales and fades the sphere
+function fadeSphere(clickedSphere){
+    BABYLON.Animation.CreateAndStartAnimation("sphereScaleDown", clickedSphere, "scaling.x", 30, 10, 1, 0.5, 0);
+    BABYLON.Animation.CreateAndStartAnimation("sphereScaleDown", clickedSphere, "scaling.y", 30, 10, 1, 0.5, 0);
+    BABYLON.Animation.CreateAndStartAnimation("sphereScaleDown", clickedSphere, "scaling.z", 30, 10, 1, 0.5, 0);
+    BABYLON.Animation.CreateAndStartAnimation("sphereVisAnim", clickedSphere, "visibility", 30, 10, 1, 0, 0);
+};
+```
+Once you've copied that over, let's try running the scene again and this time, try clicking on the sphere.
 
 3. Enable physics and set the gravitational force with a vector on `line 22`
 ```javascript
