@@ -229,7 +229,7 @@ Click run to see our latest progress in action.
 
 
 ## Next thing we should add is the ability to keep score in our game.
-1. We're going to start by creating a variable to hold our score count.  Copy the following snippet underneath our camera and lighting code near the top of our code.
+1. We're going to start by creating a variable to hold our score count.  Copy the following snippet underneath our camera and lighting code near the top.
 ```javascript
     // Creat a variable to hold our score.
     var score = 0;
