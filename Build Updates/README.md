@@ -252,10 +252,10 @@ Ok let's run this! Not bad!  We've got the makings of a game here.  Although...i
 ## Let's make this game a little more intersting by adding in more spheres!
 1. To start with, we're going to replace all of our current sphere creation code.  Find this code:
 ```javascript
-	//Create a sphere for the scene
-	var sphere = BABYLON.Mesh.CreateIcoSphere("sphere", {radius:0.8, flat:true, subdivisions: 16}, scene);
-	sphere.material = new BABYLON.StandardMaterial("material", scene);
-	sphere.material.diffuseColor = new BABYLON.Color3(0.588, 0.805, 0.896);
+    //Create a sphere for the scene
+    var sphere = BABYLON.Mesh.CreateIcoSphere("sphere", {radius:0.8, flat:true, subdivisions: 16}, scene);
+    sphere.material = new BABYLON.StandardMaterial("material", scene);
+    sphere.material.diffuseColor = new BABYLON.Color3(0.588, 0.805, 0.896);
     sphere.position.y = 2;
     sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.7 }, scene);
 ```
