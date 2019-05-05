@@ -327,161 +327,69 @@ Again, we're simply updating the code here to check and see if any of the sphere
 
 Ok let's run this!  We've got a solid little game going here don't we?!!
 
-
-
-
-
-3. Enable physics and set the gravitational force with a vector on `line 22`
+## There's one last thing that we need to tackle before we wrap up.  There's a bug in our game.  You can hit a sphere multiple times before it disappears, inflating your score.  That's not what we want...we want each sphere to be able to be hit just once.
+1. To fix this bug, we're going to get a little creative.  Let's start by adding a new array just under where we create our array of spheres.  Look for this in your code:
 ```javascript
-    // Enable Physics and set gravtiy force with a vector
-    var gravityVector = new BABYLON.Vector3(0, -1, 0);
-    scene.enablePhysics(gravityVector, new BABYLON.CannonJSPlugin());
-```
-3. Add a `physicsImposter` to the `sphere` on `line 32`
-```javascript
-sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.9 }, scene);
-```
-4. Add a `physicsImposter` to the `ground` on `line 46`
-```javascript
-ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5, restitution: 0.7 }, scene);
-```
-5. Save the changes and refresh the browser. You should now see the sphere fall from the sky and bounce on the ground.
-NOTE: If you are having any issues check out this commit to the repo. Its what your files should look like after this step:
-[Link to commit](https://github.com/cassieview/Build-First-Web-VR-Game-Absolute-Beginner/commit/49ede511f3f1eb33ecb9a3801bf2b4df8851434c)
-
-## This is kinda cool. We now have one sphere falling from the sky and bouncing onto the ground. But wouldnt it be way cooler if you had lets say 10 spheres falling? Lets do that next!
-
-1. Add `addSpheres` function on `line 56` below our `createScene` function
-```javascript
-var addSpheres = function (scene, amount) {
-    for (let index = 0; index < amount; index++) {
-        let sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
-        sphere.position = new BABYLON.Vector3(Math.random() * 20 - 10, 10, Math.random() * 10 - 5);
-        sphere.material = new BABYLON.StandardMaterial("sphere material", scene);
-        sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
-    }
- }
-```
-2. Delete or comment out the code that was creating the sphere in the `createScene` function on `lines 27-32`.
-```javascript
-    var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 5 }, scene);
-    sphere.position.y = 10;
-    sphere.position.x = -10;
-    sphere.position.z = -10;
-    sphere.material = new BABYLON.StandardMaterial("sphere material", scene);
-    sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
-```
-3. Add a call to the `addSpheres` function we just created. This goes on `line 27`. This is calling the function we created, passing in the scene we want to add the spheres to and defining how many spheres we want.
-```javascript
-addSpheres(scene, 10);
+    var spheres = [];
 ```
 
-## Lets add a button to trigger the spheres falling from the sky
-1. Copy and paste the below script on `line 43` below the `ground.physicsImpostor` variable. 
-2. This block of code is doing multiple things:<br/>
-    a. Creating a button and the button attributes. <br/>
-    b. Creating a full screen canvas texture to add our button to. <br/>
-    c. Then we moved the `addSpheres` method inside of the button event that fires on click. This will add the spheres and remove the          button visibility to make the game start.<br/>
-
+Just underneath that let's add this:
 ```javascript
-     // GUI
-     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+    var clickedSpheres = [];
+```
 
-     var button = BABYLON.GUI.Button.CreateSimpleButton("button", "Start Game");
-     button.width = 0.2;
-     button.height = "40px";
-     button.color = "white";
-     button.background = "blue";
-     button.onPointerUpObservable.add(function () {
-        addSpheres(scene,10);
-        button.isVisible = false;
+2. What we want to do, is keep a list of every sphere that's been clicked.  So once a sphere has been clicked we want to add it into this array.  We can do that in our fadeSphere function that's called whenever a sphere is clicked.  Add the following snippet into your fadeSphere function:
+```javascript
+    clickedSpheres.push(clickedSphere);
+```
+
+3. Next, locate the following in your code:
+```javascript
+    // When a sphere is clicked update the score
+    scene.onPointerObservable.add((e)=>{
+        if(e.type == BABYLON.PointerEventTypes.POINTERDOWN){
+            spheres.forEach((s)=>{
+                if(e.pickInfo.pickedMesh == s){
+                    fadeSphere(s);
+                }
+            });
+        }
     });
-    advancedTexture.addControl(button);  
 ```
-
-## Make the spheres disappear on click (shoot) event
-1. Add event with the `actionManager` to spheres so they disappear when shot. Copy and paste below on `line 70`
+Just after this line:
 ```javascript
-      //add click event to sphere
-      sphere.actionManager = new BABYLON.ActionManager(scene);
-      sphere.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, function () {
-            scene.removeMesh(sphere);
-            score++;
-            console.log("score: " + score);
-      }));
+    spheres.forEach((s)=>{
 ```
-2. We added score in the event so lets define the variable on `line 63`.
+
+we're going to add this:
 ```javascript
-    var score = 0;
+    if(clickedSpheres.includes(s)){
+        return;
+    }
 ```
-3. Now we have spheres falling and we can click on them to disappear.  The problem here is that if the spheres just sit on the ground the player can keep shooting them. Lets remove the `ground.physicsImpostor` so spheres fall through instead of piling up. We can do this by commenting on the below code on `line 39`
+
+and then we're going to add an 'else' statement just in front of the next 'if.' So this section of code should now look like this:
 ```javascript
-    //ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0.5,               restitution: 0.7 }, scene);
+    // When a sphere is clicked update the score
+    scene.onPointerObservable.add((e)=>{
+        if(e.type == BABYLON.PointerEventTypes.POINTERDOWN){
+            spheres.forEach((s)=>{
+                if(clickedSpheres.includes(s)){
+                    return;
+                }
+                else if(e.pickInfo.pickedMesh == s){
+                    fadeSphere(s);
+                }
+            });
+        }
+    });
 ```
-4. Uncomment the enable VR block so that we can run our game in VR.
+
+4. Last step! Next we want to make sure that we reset this new array if the reset button is pressed. Locate your 'resetGame' function and add this to it:
 ```javascript
-    var vrHelper = scene.createDefaultVRExperience();
-    vrHelper.enableInteractions();
+    clickedSpheres = [];
 ```
 
-# Congrats! You built a game!
-Now you have the basic workings of a game and the source for what you created is here in this repo. You can pick up right where you left off on any computer and continue to build out your game and add features. 
+## Congratulations!  You made a VR game entirely on the web!  And it wasn't that tricky either was it?  Be sure to keep playing and trying new things.  Here's a fantstic resource where you can dive in deeper into learning more about Babylon.js 
 
-## How to host a static site on azure
-1. Go to https://portal.azure.com
-2. Click `Create a resource`
-3. Click `Storage account`
-4. Select `Create new` Resource Group
-5. Give your storage account a name. Something like `myawesomegame`
-6. Select a Location (this is the location of the data center that has all the servers ready for us to use)
-7. Leave the defaults for all the other fields the click `Review + create`
-8. Click Create. It will take a minute to deploy and create your resource
-9. Go to the resource when you get the confirmation that it has been created
-10. Click `Static website` from the left hand navigation then click `Enabled`
-11. Index document name is `index.html` then click `Save`
-12. Select the `$Web` link that appears after your save. This will bring us to the blob storage we want to upload our files to.
-13. Click `Upload`
-14. Click the Folder Icon to navigate to your `index.html` and `index.js` files that we created in this tutorial
-15. Select both the `index.html` and `index.js` files and click open
-16. Click `Upload`
-17. Exit out of the upload pane by clicking the `X` in the upper right corner.
-18. Select `Change access level` from the top nav
-19. Select `Container (anonymous read access for containers and blobs)`
-20. Select `OK`
-21. Use the bread crumbs nav at the very top to navigate back to the static website pane.
-22. Copy the `Primary endpoint` url and paste it into the browser. (Make sure the Index Document name is set to `index.html`) 
-23. TADA! Your game is hosted! Thanks Azure! :D
-
-
-## Here are ideas and code snippets for how you could continue to expand on the game.
-
-### Add label to keep score
-```javascript
-    var scoreText = new BABYLON.GUI.TextBlock();
-    scoreText.text = "Score: " + currentScore.toString();
-    scoreText.color = "white";
-    scoreText.fontSize = 24;
-    advancedTexture.addControl(scoreText);
-```
-### Play with colors
-1. One way to change the colors of meshes (spheres and ground) is to add light effects to the scenes light varible. Use Color3 which takes Red, Green, Blue (RGB) numbers to create a color. Add the below block of code on `line 20` and see how it changes the colors in your scene!
-```javascript
-   //Diffuse - the basic color or texture of the material as viewed under a light;
-    light.diffuse = new BABYLON.Color3(1, 0, 0);
-    //Specular - the highlight given to the material by a light;
-	light.specular = new BABYLON.Color3(0, 1, 0);
-	light.groundColor = new BABYLON.Color3(0, 1, 0);
-```
-### Play with gravity to make the spheres fall faster or slower
-```javascript
-var gravityVector = new BABYLON.Vector3(0, -10, 0);
-```
-
-### Add Sound when sphere disappears
-Docs to add sound: https://doc.babylonjs.com/how_to/playing_sounds_and_music
-
-## Helpful Links
-BabylonJS playground https://www.babylonjs-playground.com/ <br/>
-Live example can be found at https://cloudvr.games
-
-
+[doc.babylonjs.com](https://doc.babylonjs.com/)
