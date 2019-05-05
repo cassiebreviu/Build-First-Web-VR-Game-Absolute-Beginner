@@ -87,7 +87,7 @@ engine.runRenderLoop(() => {
 scene.render();
 });
 ```
-4. Save file and navigate to the file explorer. Double click the index.html (browswer will open ooo ahhh I made a site)
+4. Save file and navigate to the file explorer. Double click the index.html
 
 
 Here we're going to switch over from vscode and the browser, to using the Babylon playground, located at:
