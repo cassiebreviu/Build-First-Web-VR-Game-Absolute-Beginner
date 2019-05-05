@@ -223,7 +223,9 @@ function resetGame(){
     sphere.physicsImpostor.setLinearVelocity(new BABYLON.Vector3());
 };
 ```
-When the button is pressed and the 'resetGame' function is called, we put the scale, position, and visibility of the sphere back to where we started.
+When the button is pressed and the 'resetGame' function is called, we put the scale, position, and visibility of the sphere back to where we started. 
+
+Click run to see our latest progress in action.
 
 
 ## Next thing we should add is the ability to keep score in our game.
@@ -243,6 +245,90 @@ When the button is pressed and the 'resetGame' function is called, we put the sc
 ```javascript
     score = 0;
 ```
+
+Ok let's run this! Not bad!  We've got the makings of a game here.  Although...it's a pretty boring game.
+
+
+## Let's make this game a little more intersting by adding in more spheres!
+1. To start with, we're going to replace all of our current sphere creation code.  Find this code:
+```javascript
+	//Create a sphere for the scene
+	var sphere = BABYLON.Mesh.CreateIcoSphere("sphere", {radius:0.8, flat:true, subdivisions: 16}, scene);
+	sphere.material = new BABYLON.StandardMaterial("material", scene);
+	sphere.material.diffuseColor = new BABYLON.Color3(0.588, 0.805, 0.896);
+    sphere.position.y = 2;
+    sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.7 }, scene);
+```
+
+and replace it with this:
+```javascript
+	// Create spheres
+    var numberOfSpheres = 10;
+    var spheres = [];
+    for (let index = 0; index < numberOfSpheres; index++) {
+        spheres[index] = BABYLON.Mesh.CreateIcoSphere("sphere", {radius:0.8, flat:true, subdivisions: 16}, this.scene);
+        spheres[index].material = new BABYLON.StandardMaterial("material", scene)
+        spheres[index].material.diffuseColor = new BABYLON.Color3(0.588, 0.805, 0.896)
+        spheres[index].physicsImpostor = new BABYLON.PhysicsImpostor(spheres[index], BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.7 }, scene);
+        spheres[index].position = new BABYLON.Vector3(Math.random() * 20 - 10, 10, Math.random() * 10 - 5);
+    }
+```
+This new code shows you how loops work.  We loop through a series of code that creates a sphere, adds and modifies a material to that sphere, adds physics to that sphere, and gives it a random starting location.  It does this for the number of times specified by the numberOfSpheres variable. 
+
+2. Next up is to replace the following code in the 'resetGame' function:
+```javascript
+    sphere.visibility = 1;
+    sphere.scaling.x = 1;
+    sphere.scaling.y = 1;
+    sphere.scaling.z = 1;
+    sphere.position.y = 2;
+    sphere.physicsImpostor.setLinearVelocity(new BABYLON.Vector3());
+```
+
+with this:
+```javascript
+    for (let index = 0; index < numberOfSpheres; index++) {
+        spheres[index].visibility = 1;
+        spheres[index].scaling.x = 1;
+        spheres[index].scaling.y = 1;
+        spheres[index].scaling.z = 1;
+        spheres[index].position = new BABYLON.Vector3(Math.random() * 20 - 10, 10, Math.random() * 10 - 5);
+        spheres[index].physicsImpostor.setLinearVelocity(new BABYLON.Vector3());
+    }
+```
+This basically does the same things we did to reset our first sphere, but does it for all of the spheres.
+
+3. Ok last thing we have to update to get multiple spheres working in our game is to replace the following code:
+```javascript
+	//add an event that fires when a click happens
+	scene.onPointerObservable.add((e)=>{
+        if(e.type == BABYLON.PointerEventTypes.POINTERDOWN){
+            if(e.pickInfo.pickedMesh == sphere){
+                fadeSphere(sphere);
+            }
+        }
+    });
+```
+
+with this:
+```javascript
+    // When a sphere is clicked update the score
+	scene.onPointerObservable.add((e)=>{
+        if(e.type == BABYLON.PointerEventTypes.POINTERDOWN){
+            spheres.forEach((s)=>{
+                if(e.pickInfo.pickedMesh == s){
+                    fadeSphere(s);
+                }
+            });
+        }
+    });
+```
+Again, we're simply updating the code here to check and see if any of the spheres were underneath the cursor when a click occured.
+
+Ok let's run this!  We've got a solid little game going here don't we?!!
+
+
+
 
 
 3. Enable physics and set the gravitational force with a vector on `line 22`
