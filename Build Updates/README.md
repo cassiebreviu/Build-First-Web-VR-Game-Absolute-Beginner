@@ -162,7 +162,7 @@ Ok let's try hitting run again and seeing what happens.  Woohoo!  Pretty easy to
 1. First let's create an event that fires whenever a click happens.  Copy this snippet underneath all of our sphere code.
 ```javascript
     //add an event that fires when a click happens
-	scene.onPointerObservable.add((e)=>{
+    scene.onPointerObservable.add((e)=>{
         if(e.type == BABYLON.PointerEventTypes.POINTERDOWN){
             if(e.pickInfo.pickedMesh == sphere){
                 fadeSphere(sphere);
@@ -262,7 +262,7 @@ Ok let's run this! Not bad!  We've got the makings of a game here.  Although...i
 
 and replace it with this:
 ```javascript
-	// Create spheres
+    // Create spheres
     var numberOfSpheres = 10;
     var spheres = [];
     for (let index = 0; index < numberOfSpheres; index++) {
