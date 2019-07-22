@@ -89,10 +89,10 @@ scene.render();
 ```
 4. Save file and navigate to the file explorer. Double click the index.html
 
-
-Here we're going to switch over from vscode and the browser, to using the Babylon playground, located at:
-[playground.babylonjs.com](https://playground.babylonjs.com/)
-
+## You can either stay in vs code here or move to the playground on the babylonjs website.
+In this tutorial we switch over from vscode and the browser, to using the Babylon playground, located at:
+[playground.babylonjs.com](https://playground.babylonjs.com/). However if you want to stay in VS Code I recommend following along to the [Dev.to Blog post](https://dev.to/azure/build-a-web-vr-game-with-javascript-using-the-babylonjs-framework-aek)</br>
+Additionally in the [Helpful Links](https://github.com/cassieview/Build-First-Web-VR-Game-Absolute-Beginner/blob/master/README.md#helpful-links) I provide links to the full VS code tutorial on dev.to and links to the github repo for the typescript starter projet and the completed game.
 
 ## Ok, to get started, let's recreate what we just did in vscode, here in the playground.
 1. Select all of the code that you see in left window, and delete it!
@@ -350,7 +350,7 @@ One last fun thing to show you.  If you've saved your scene, you can go to setti
 ## Helpful Links
 [Dev.to tutorial to Build the entire game in VS Code with TypeScript](https://dev.to/azure/build-a-web-vr-game-with-javascript-using-the-babylonjs-framework-aek)</br>
 [Github Repo for TypeScript BabylonJS Starter project to build your own game](https://github.com/cassieview/babylonjs-webpack-typescript-starter-project)</br>
-[Github Repo for completed Game in VS Code with TypeScript] (https://github.com/cassieview/WebVR-ExploadingSpheres-Babylonjs)</br>
+[Github Repo for completed Game in VS Code with TypeScript](https://github.com/cassieview/WebVR-ExploadingSpheres-Babylonjs)</br>
 
 
 ## How to host a static site on Microsoft Azure Cloud
