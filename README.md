@@ -347,6 +347,11 @@ You made a VR game entirely on the web!  And it wasn't that tricky either was it
 
 One last fun thing to show you.  If you've saved your scene, you can go to settings in the playground and look for QR Code Link.  Grab your phone and get your camera out to scan this code...now you can take your VR game with you!
 
+## Helpful Links
+[Build the entire game in VS Code with TypeScript](https://dev.to/azure/build-a-web-vr-game-with-javascript-using-the-babylonjs-framework-aek)
+[TypeScript BabylonJS Starter project to build your own game](https://github.com/cassieview/babylonjs-webpack-typescript-starter-project)
+[Completed Game in VS Code with TypeScript] (https://github.com/cassieview/WebVR-ExploadingSpheres-Babylonjs)
+
 
 ## How to host a static site on Microsoft Azure Cloud
 1. Go to https://portal.azure.com
