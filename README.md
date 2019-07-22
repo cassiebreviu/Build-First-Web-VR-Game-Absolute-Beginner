@@ -89,8 +89,7 @@ scene.render();
 ```
 4. Save file and navigate to the file explorer. Double click the index.html
 
-## You can either stay in vs code here or move to the playground on the babylonjs website.
-In this tutorial we switch over from vscode and the browser, to using the Babylon playground, located at:
+In this tutorial we switch over from VS Code to the browser based Babylon playground, located at:
 [playground.babylonjs.com](https://playground.babylonjs.com/). However if you want to stay in VS Code I recommend following along to the [Dev.to Blog post](https://dev.to/azure/build-a-web-vr-game-with-javascript-using-the-babylonjs-framework-aek)</br>
 Additionally in the [Helpful Links](https://github.com/cassieview/Build-First-Web-VR-Game-Absolute-Beginner/blob/master/README.md#helpful-links) I provide links to the full VS code tutorial on dev.to and links to the github repo for the typescript starter projet and the completed game.
 
