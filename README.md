@@ -132,13 +132,13 @@ import { Engine, Scene, ArcRotateCamera, HemisphericLight, Vector3, MeshBuilder,
 
 Add this line of code at the top where we create the scene variable:
 ```javascript
+var gravityVector = new BABYLON.Vector3(0, -.03, 0);
 scene.enablePhysics(gravityVector, new CannonJSPlugin);
 ```
 
 Copy and paste the below code block under the `ground` variable. Here we are updating the `ground mesh` and giving it a `physicsImpostor` so that the sphere will fall and land on the ground.
 
 ```javascript
-var gravityVector = new BABYLON.Vector3(0, -1, 0);
     var light = new HemisphericLight("light",Vector3.Zero(),scene);
 
     camera.checkCollisions = true;
@@ -177,7 +177,7 @@ Then update the `create sphere` logic to the below:
 
 ```
 
-Now we have a sphere falling onto the ground panel we created. How exciting.
+Now we have a sphere falling onto the ground panel we created. How exciting. To change the speed in which the spheres fall change the `gravityVector` numbers!
 
 ## Project Architecture
 
@@ -265,7 +265,7 @@ This would be a good time to `npm run build` and test the changes you made. When
 
 ## Make sphere disappear on click 
 
-To do this we are going to the `sphere.ts` file and add the `ActionManager` to the `sphere` so when we click on the sphere it disappears. Add the below logic start at line 17. Additionally you will need to update the import at the top of the file to include `ActionManager` and `ExecuteCodeAction`.
+To do this we are going to update the `sphere.ts` file and add the `ActionManager` event to the `sphere` so when we click on the sphere it disappears. Add the below logic at the bottom of the `addSphere` function. Additionally you will need to update the import at the top of the file to include `ActionManager` and `ExecuteCodeAction`.
 
 ```javascript
 import { Scene, Vector3, MeshBuilder, Mesh, ShadowGenerator, DirectionalLight, ActionManager, ExecuteCodeAction } from "babylonjs";
@@ -301,14 +301,14 @@ export function addSpheres(scene: Scene) {
 Update the `index.ts` file to import the `addSpheres` function and call that instead of `addSphere`.
 
 ```javascript
-line 3: import { addSpheres } from "./sphere";
-line 54: addSpheres(scene);
+import { addSpheres } from "./sphere";
+addSpheres(scene);
 ```
 
 Then update the sphere position in the `sphere.ts` file so it doesn't create 10 spheres all in the same spot. Delete `sphere.position.y = 5;` and add
 
 ```javascript
-    line 17: sphere.position = new Vector3(Math.random() * 20 - 10, 10, Math.random() * 10 - 5);
+    sphere.position = new Vector3(Math.random() * 20 - 10, 10, Math.random() * 10 - 5);
 ```
 
 ## Add particle animation to sphere to mimic an explosion
@@ -419,7 +419,7 @@ Import the `particles.ts` script into the `spheres.ts` script.
 import { addParticlesToMesh, removeParticlesFromMesh } from "./particles";
 ```
 
-Update the sphere on click event and add the sleep function in. This will add the particles to the sphere when it its clicked, wait 250 milliseconds and then stop adding particles. If you didnt stop the particles there would just be particles appearly everywhere long after the sphere was removed from the scene.
+Update the sphere on click event to add the particle system and add the sleep function. This will add the particles to the sphere when it its clicked, wait 250 milliseconds and then stop adding particles to the scene. If you didn't stop the particles there would just be particles everywhere long after the sphere was removed from the scene and the explosion effect wouldnt happen correctly.
 
 ```javascript
     sphere.actionManager.registerAction(new 
@@ -498,7 +498,9 @@ Then import the script in the `index.ts` script.
 import { addLabelToScene, updateScore } from "./score";
 ```
 
-In the `index.ts` file we want to add the function call `addLabelToScene(panel)` after we add the button `startGameButton(panel);` and we want to reset the score when the `startGameButton` is clicked.
+In the `index.ts` file  and `createScene` function we want to add the function call `addLabelToScene()` after the call to add the button `startGameButton(panel);`
+
+Update the `startGameButton` function to `updateScore` to 0 to reset the score when the game is started.
 
 ```javascript
 var startGameButton = function (panel) {
@@ -516,11 +518,12 @@ var startGameButton = function (panel) {
     button.content = text1;
 }
 ```
-In the `sphere.ts` we need to `import { incrementScore } from "./score";` from the `score.ts` script and then add the `incrementScore();` after `removeParticlesFromMesh(particleSystem);` to increase the score when a sphere is clicked.
+
+In the `sphere.ts` we need to `import { incrementScore } from "./score";` script and then add the `incrementScore();` after `removeParticlesFromMesh(particleSystem);` to increase the score when a sphere is clicked.
 
 ## Remove `PhysicsImpostor` from ground mesh so balls fall through the ground instead of sitting on top.
 
-We dont want people to be able to shoot the balls on the ground so we need to delete the `PhysicsImpostor` from the ground mesh.
+We don't want people to be able to shoot the balls on the ground so we need to delete the `PhysicsImpostor` from the ground mesh.
 
 ```javascript
 ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0, restitution: 0 }, scene);
@@ -531,7 +534,7 @@ ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpo
 Import the babylon materials to the `sphere.ts` script.
 
 ```javascript
-import {StandardMaterial, Texture, Color3} from "babylonjs-materials";
+import { Scene, Vector3, MeshBuilder, Mesh, ShadowGenerator, DirectionalLight, ActionManager, ExecuteCodeAction, StandardMaterial, Texture, Color3 } from "babylonjs";
 ```
 
 Then add the material to the sphere mesh with the following code
@@ -544,7 +547,6 @@ Then add the material to the sphere mesh with the following code
     sphere.material = materialAmiga;
 
 ```
-
 
 Ok lets `npm run build` and see if it works!
 
