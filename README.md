@@ -83,7 +83,7 @@ var canvas: any = document.getElementById("renderCanvas");
 var engine: Engine = new Engine(canvas, true);
 
 ```
-Below we have the create scene function. Here we define the `scene`, pass in the `engine`. Then we create a camera. The camera is the point of view of the game player. We are using the [universal camera]("https://doc.babylonjs.com/babylon101/cameras#universal-camera").
+Below we have the create scene function. Here we define the `scene`, pass in the `engine`. Then we create a camera. The camera is the point of view of the game player. We are using the [free camera]("https://doc.babylonjs.com/babylon101/cameras#free-camera").
 
 Next we add a simple sphere `mesh` to our scene and set the basic properties such as size, name and the scene we created. 
 
@@ -97,8 +97,8 @@ function createScene(): Scene {
     var scene: Scene = new Scene(engine);
 
     // Create camera
-    var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -10), scene);
-
+     var camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 0, -10), scene);
+   
     // Create sphere
     var sphere1: Mesh = MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
     sphere1.position.y = 5;
@@ -135,7 +135,7 @@ Add this line of code at the top where we create the scene variable:
 scene.enablePhysics(gravityVector, new CannonJSPlugin);
 ```
 
-Copy and paste the below code block under the `ground` variable. Here we are adding the ground mesh and giving it a `physicsImpostor` so that the sphere will fall and land on the ground.
+Copy and paste the below code block under the `ground` variable. Here we are updating the `ground mesh` and giving it a `physicsImpostor` so that the sphere will fall and land on the ground.
 
 ```javascript
 var gravityVector = new BABYLON.Vector3(0, -1, 0);
@@ -181,7 +181,7 @@ Now we have a sphere falling onto the ground panel we created. How exciting.
 
 ## Project Architecture
 
-We have a lot to add to this game still and although we could add it all in one giant function. That is not best practice for a variety of reasons. Lets add a `sphere.ts` file and move our sphere logic to it.
+We have a lot to add to this game still and although we could add it all in one giant function. That is not best practice for a variety of reasons. Lets add a `sphere.ts` file in the `src` folder and move our sphere logic to it.
 
 ```javascript
 
@@ -204,12 +204,14 @@ export function addSphere(scene: Scene) {
 
 ```
 
-Then go back to `index.ts` and import the file we created and call the `addSphere` function where the `addSphere` logic used to be.
+Then go back to `index.ts` and import the file we created and call the `addSphere` function where the `//Create Sphere` logic is.
 
 ```javascript
 
 line 2: import { addSphere } from "./sphere";
-line 35:  addSphere(scene);
+
+//Create Sphere
+addSphere(scene);
 
 ```
 
@@ -221,7 +223,7 @@ Now would be a good time to `npm run build` and refresh your browser to see that
 
 Ok like any good game you need a start button, to ya know, start the game.
 
-Import the gui library so that we can use the 3d button and panel.  
+Import the gui library so that we can use the 3D button and panel.  
 
 ```javascript
 import * as GUI from  "babylonjs-gui";
@@ -244,7 +246,7 @@ var startGameButton = function (panel) {
 }
 ```
 
-Update the `createScene` function to add the button to the scene. This will go on line 35 where `addSphere` previously was.
+Update the `createScene` function to add the button to the scene. This will go where `addSphere` previously was.
 
 ```javascript
 
@@ -258,7 +260,7 @@ Update the `createScene` function to add the button to the scene. This will go o
 
 ```
 
-This would be a good time to `npm run build` and test the changes you made. When you click the button the sphere should drop from the sky on to the ground.
+This would be a good time to `npm run build` and test the changes you made. When you click the button the sphere should drop from the sky onto the ground.
 
 
 ## Make sphere disappear on click 
