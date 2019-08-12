@@ -58,8 +58,8 @@ function createScene() {
     advancedTexture.addControl(button);
 
     // Enable VR
-    var vrHelper = scene.createDefaultVRExperience();
-    vrHelper.enableInteractions();
+    // var vrHelper = scene.createDefaultVRExperience();
+    // vrHelper.enableInteractions();
 
     return scene;
 }
