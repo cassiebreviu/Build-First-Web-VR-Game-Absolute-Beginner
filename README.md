@@ -1,18 +1,23 @@
 
-## In this tutorial I will show you step by step how to build a web VR game with BabylonJS
+## In this workshop you will learn how to build a Web VR game with BabylonJS and TypeScript
 
 ![game img](https://imgur.com/bvJslJf.jpg)
 
 ## Prerequisites
--[nodejs](https://nodejs.org/en/download/)
--[vs code](https://code.visualstudio.com/download?WT.mc_id=devto-blog-casiljan)
+- [nodejs](https://nodejs.org/en/download/)
+- [vs code](https://code.visualstudio.com/download?WT.mc_id=devto-blog-casiljan)
 
-## What is BabylonJS and CannonJS
-[BabylonJS](https://www.babylonjs.com/) is a complete JavaScript framework for building 3D games and experiences with HTML5, WebGL, WebVR and Web Audio.
+## What is BabylonJS and CannonJS?
+[BabylonJS](https://www.babylonjs.com/) is a complete JavaScript framework for building 3D games and experiences with HTML5, [WebGL](https://en.wikipedia.org/wiki/WebGL), WebVR and Web Audio.
 
 [CannonJS](http://www.cannonjs.org/) is a physics engine, written in JavaScript. And what is a physics engine you might ask? Well its "software that provides an approximate simulation of certain physical systems, such as rigid body dynamics (including collision detection), soft body dynamics, and fluid dynamics, of use in the domains of computer graphics, video games and film."
 
-## First we need to get the base starter project using babylonjs, webpack, and typescript
+## What is TypeScript?
+[TypeScript](https://www.typescriptlang.org/) is a typed superset of JavaScript the compiles to plain JavaScript. TypeScript starts from the same syntax and semantics that millions of JavaScript developers know today. Use existing JavaScript code, incorporate popular JavaScript libraries, and call TypeScript code from JavaScript.
+
+TypeScript compiles to clean, simple JavaScript code which runs on any browser, in Node.js, or in any JavaScript engine that supports [ECMAScript](https://en.wikipedia.org/wiki/ECMAScript) 3 (or newer).
+
+## First we need to get the base starter project using BabylonJS, [Webpack](https://webpack.js.org/concepts/), and TypeScript
 
 ### Steps to Run Starter Project and [Git Repo Link](https://github.com/cassieview/babylonjs-webpack-typescript-starter-project)
 
@@ -63,13 +68,13 @@
 
 </html>
 ```
-### The index.ts typescript file
+### The index.ts TypeScript file
 
-The index.ts file is the typescript file that creates the main scene. It is typescript that is transpiled to javascript in the dist folder.
+The index.ts file is the typescript file that creates the main scene. When you run `npm run build` it is to compiled to vanilla javascript in the dist folder. This is then called with the `script` tag in the `index.html`.
 
 The script source for the game is found in the dist folder. Webpack is an open-source JavaScript module bundler it generates static assets representing those modules. This is what is loaded from the dist folder. WebPack compiles the script down to one source and that is used to serve the game script.
 
-First thing we import the packages needed from BabylonJS to create our game scene. Create the canvas variable and use vanilla javascript to grab the renderCanvas canvas tag from the html body section. Then we create the engine and pass in the BabylonJS engine.
+The below script shows how we import the packages needed from BabylonJS to create our game scene. Create the canvas variable and use vanilla javascript to grab the renderCanvas canvas tag from the html body section. Then we create the engine variable and pass in the new BabylonJS Engine.
 
 ```javascript
 
@@ -78,11 +83,13 @@ var canvas: any = document.getElementById("renderCanvas");
 var engine: Engine = new Engine(canvas, true);
 
 ```
-Next we have the create scene function. Here we define the scene, pass in the engine. The we create a camera. The camera is the point of view of the game player. We are using the [universal camera]("https://doc.babylonjs.com/babylon101/cameras#universal-camera").
+Below we have the create scene function. Here we define the `scene`, pass in the `engine`. Then we create a camera. The camera is the point of view of the game player. We are using the [universal camera]("https://doc.babylonjs.com/babylon101/cameras#universal-camera").
 
-Next we add a simple sphere mesh to our scene and set the basic properties. The vr helper adds the vr button to the bottom right of the screen so that a user can enter the game in vr. This does create issues when viewing the game in the browser and testing. For testing I recommend commenting out that line of code. Then when you want to test with your vr headset, uncomment it to enter the vr game.
+Next we add a simple sphere `mesh` to our scene and set the basic properties such as size, name and the scene we created. 
 
-TIP: You can easily test changes as you make them by running `npm run build` then open the path to the index.html file in the browser `C:/Code/babylonjs-webpack-typescript-starter-project/index.html`. This is a static site so you dont actually have to run it with `npm start`. Simply run the build and refresh the browser path to the index.html.
+The vr helper adds the vr button to the bottom right of the screen so that a user can enter the game in vr for a web browser. This does create issues when viewing the game in the browser and testing. For testing I recommend commenting out that line of code. Then when you want to test with your vr headset, uncomment it to enter the vr game.
+
+TIP: You can easily test changes as you make them by running `npm run build` then open the path to the `index.html` file in the browser `../babylonjs-webpack-typescript-starter-project/index.html`. This is a static site so you dont actually have to run it with `npm start`. Simply run the build and refresh the browser path to the `index.html`.
 
 ```javascript
 function createScene(): Scene {
@@ -113,22 +120,27 @@ engine.runRenderLoop(() => {
 
 ```
 
-## Start building the game
+## Time to start building out the game!
 
-Now you should have a basic understanding of whats in the starter project and what babylonjs is doing for us. Next we want to add gravity so we need the Cannonjs library mentioned above. 
+Now you should have a basic understanding of whats in the starter project and what BabylonJS is doing for us. Next we want to add gravity so we need the CannonJS physics library mentioned above. 
 
-`import { Engine, Scene, ArcRotateCamera, HemisphericLight, Vector3, MeshBuilder, Mesh, CannonJSPlugin } from "babylonjs";`
+We need to import the `CannonJSPlugin` after the `Mesh` in the package imports at the top of the script. When you add the plugin the import should look like it does below.
 
-Copy and paste this code block under the scene variable. Here we are adding the ground mesh and giving it a `physicsImpostor` so that the sphere will fall and land on the ground.
+```javascript
+import { Engine, Scene, ArcRotateCamera, HemisphericLight, Vector3, MeshBuilder, Mesh, CannonJSPlugin } from "babylonjs";
+```
+
+Add this line of code at the top where we create the scene variable:
+```javascript
+scene.enablePhysics(gravityVector, new CannonJSPlugin);
+```
+
+Copy and paste the below code block under the `ground` variable. Here we are adding the ground mesh and giving it a `physicsImpostor` so that the sphere will fall and land on the ground.
 
 ```javascript
 var gravityVector = new BABYLON.Vector3(0, -1, 0);
-    scene.enablePhysics(gravityVector, new CannonJSPlugin);
-
     var light = new HemisphericLight("light",Vector3.Zero(),scene);
 
-    // Parameters : name, position, scene
-    var camera = new BABYLON.UniversalCamera("UniversalCamera", new BABYLON.Vector3(0, 0, -10), scene);
     camera.checkCollisions = true;
     camera.applyGravity = true;
     // Targets the camera to a particular position. In this case the scene origin
@@ -137,25 +149,21 @@ var gravityVector = new BABYLON.Vector3(0, -1, 0);
     // Attach the camera to the canvas
     camera.attachControl(canvas, true);
 
-    // Create Ground
-    var ground = BABYLON.Mesh.CreatePlane("ground", 25.0, scene);
-    ground.position = new BABYLON.Vector3(0, -10, 0);
-    ground.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
-
+    // Add ground features and physics
     ground.material = new BABYLON.StandardMaterial("groundMat", scene);
     ground.material.backFaceCulling = false;
     ground.receiveShadows = true;
     ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 1, restitution: 0 }, scene);
 
 ```
-Add physics, shadow and light to sphere:
-
+Add physics, shadow and light to sphere by importing the `ShadowGenerator` and `DirectionalLight` packages at the top of the script. 
 
 ```javascript
 import { Engine, Scene, ArcRotateCamera, HemisphericLight, Vector3, MeshBuilder, Mesh, CannonJSPlugin, ShadowGenerator, DirectionalLight } from "babylonjs";
+```
+Then update the `create sphere` logic to the below:
 
-
-  
+  ```javascript
 // Create sphere
     var sphereLight = new DirectionalLight("dir02", new Vector3(0.2, -1, 0), scene);
     sphereLight.position = new Vector3(0, 80, 0);
