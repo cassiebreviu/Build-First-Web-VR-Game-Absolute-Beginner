@@ -510,6 +510,7 @@ var startGameButton = function (panel) {
         //reset score
         updateScore(0);
         addSpheres(scene);
+        button.isVisible = false;
     });
     var text1 = new GUI.TextBlock();
     text1.text = "Start Game";
