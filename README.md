@@ -87,7 +87,7 @@ Below we have the create scene function. Here we define the `scene`, pass in the
 
 Next we add a simple sphere `mesh` to our scene and set the basic properties such as size, name and the scene we created. 
 
-The vr helper adds the vr button to the bottom right of the screen so that a user can enter the game in vr for a web browser. This does create issues when viewing the game in the browser and testing. For testing I recommend commenting out that line of code. Then when you want to test with your vr headset, uncomment it to enter the vr game.
+The vr helper adds the vr button to the bottom right of the screen so that a user can enter the game in vr for a web browser. 
 
 TIP: You can easily test changes as you make them by running `npm run build` then open the path to the `index.html` file in the browser `../babylonjs-webpack-typescript-starter-project/index.html`. This is a static site so you dont actually have to run it with `npm start`. Simply run the build and refresh the browser path to the `index.html`.
 
@@ -105,8 +105,8 @@ function createScene(): Scene {
     sphere1.material = new BABYLON.StandardMaterial("sphere material", scene)
    
     // Enable VR
-    var vrHelper = scene.createDefaultVRExperience();
-    vrHelper.enableInteractions();
+    var helper = scene.createDefaultVRExperience({createDeviceOrientationCamera: false});
+	helper.enableInteractions();
 
     return scene;
 }
@@ -586,7 +586,6 @@ Ok lets `npm run build` and see if it works!
 - backgrounds
 - custom meshes
 - sound effects
-- the sky is the limit!
 
 ## Deploy site to azure storage as a static site so all your friends can play too
 [Check out the docs on how to host this site for cheap on Azure](https://docs.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website)
@@ -594,6 +593,5 @@ Ok lets `npm run build` and see if it works!
 [Full git repo of end of project](https://github.com/cassieview/WebVR-ExploadingSpheres-Babylonjs)
 
 Shout out to the awesome docs and [playground](https://doc.babylonjs.com/examples/) on [Babylonjs](https://babylonjs.com) and the awesome developers that did the hard work to create a sweet library to enable us to build games!
-
 
 Happy game building!

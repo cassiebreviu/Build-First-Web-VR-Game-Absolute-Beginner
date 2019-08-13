@@ -47,8 +47,8 @@ function createScene(): Scene {
     startGameButton(panel);
     addLabelToScene();
     // Enable VR
-    var vrHelper = scene.createDefaultVRExperience();
-    vrHelper.enableInteractions();
+    var helper = scene.createDefaultVRExperience({createDeviceOrientationCamera: false});
+	helper.enableInteractions();
 
     return scene;
 }
