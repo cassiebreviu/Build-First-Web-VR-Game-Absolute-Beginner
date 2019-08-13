@@ -177,7 +177,7 @@ Then update the `create sphere` logic to the below:
 
 ```
 
-Now we have a sphere falling onto the ground panel we created. How exciting. To change the speed in which the spheres fall change the `gravityVector` numbers!
+Now we have a sphere falling onto the ground panel we created. How exciting. To change the speed in which the sphere falls change the `gravityVector` numbers!
 
 ## Project Architecture
 
@@ -529,12 +529,12 @@ We don't want people to be able to shoot the balls on the ground so we need to d
 ground.physicsImpostor = new BABYLON.PhysicsImpostor(ground, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 0, friction: 0, restitution: 0 }, scene);
 
 ```
-## Last we will add some [material] ("https://doc.babylonjs.com/babylon101/materials") to our spheres
+## Now we will add some [material] ("https://doc.babylonjs.com/babylon101/materials") to our spheres and ground
 
-Import the babylon materials to the `sphere.ts` script.
+Import the `babylonjs-materials` to the `sphere.ts` script.
 
 ```javascript
-import { Scene, Vector3, MeshBuilder, Mesh, ShadowGenerator, DirectionalLight, ActionManager, ExecuteCodeAction, StandardMaterial, Texture, Color3 } from "babylonjs";
+import {StandardMaterial, Texture, Color3} from "babylonjs-materials";
 ```
 
 Then add the material to the sphere mesh with the following code
@@ -546,6 +546,35 @@ Then add the material to the sphere mesh with the following code
     materialAmiga.emissiveColor = new Color3(0.5, 0.5, 0.5);
     sphere.material = materialAmiga;
 
+```
+
+Import the `babylonjs-procedural-textures` to the `index.ts` script.
+
+```javascript
+import {GrassProceduralTexture} from "babylonjs-procedural-textures";
+```
+
+Then update the ground to add the grass texture to it.
+
+```javascript
+    var grassMaterial = new BABYLON.StandardMaterial("grass", scene);
+    var grassTexture = new GrassProceduralTexture("textgrass", 256, scene);
+    grassMaterial.ambientTexture = grassTexture;
+    grassMaterial.diffuseTexture= grassTexture;
+
+    // Create Ground
+    var ground = BABYLON.Mesh.CreatePlane("ground", 25.0, scene);
+    ground.position = new BABYLON.Vector3(0, -5, 0);
+    ground.rotation = new BABYLON.Vector3(Math.PI / 2, 0, 0);
+
+    ground.material = grassMaterial;
+```
+
+## Lastly lets turn the sky to night black
+
+Add this line below the scene creation variable
+```javascript
+scene.clearColor = BABYLON.Color4.FromColor3(BABYLON.Color3.Black());
 ```
 
 Ok lets `npm run build` and see if it works!
