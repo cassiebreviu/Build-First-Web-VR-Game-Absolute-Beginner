@@ -353,7 +353,7 @@ One last fun thing to show you.  If you've saved your scene, you can go to setti
 
 
 ## How to host a static site on Microsoft Azure Cloud
-1. Go to https://portal.azure.com
+1. Go to https://portal.azure.com/?WT.mc_id=aiml-0000-cassieb
 2. Click `Create a resource`
 3. Click `Storage account`
 4. Select `Create new` Resource Group
